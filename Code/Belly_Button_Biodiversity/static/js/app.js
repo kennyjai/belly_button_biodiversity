@@ -3,31 +3,27 @@ function buildMetadata(sample) {
   // @TODO: Complete the following function that builds the metadata panel
 
   // Use `d3.json` to fetch the metadata for a sample
-    // Use d3 to select the panel with id of `#sample-metadata`
-    /* data route */
-    var url = "/metadata/" + sample;
+  // Use d3 to select the panel with id of `#sample-metadata`
+  /* data route */
+  var url = "/metadata/" + sample;
 
-    d3.json(url).then(function(response) {
-      console.log(response);
-
-    // Get object and its fields
-    // Use `Object.entries` to add each key and value pair to the panel
-    var meta = Object.keys(response);
-
-    // Get reference
-    var $sampleMetadata = document.querySelector("#sample-metadata");
+  d3.json(url).then(function(response) {
+    console.log(response);
 
     // Use `.html("") to clear any existing metadata
-    $sampleMetadata.innerHTML = null;
+    d3.select("#sample-metadata").html("");
 
-    // Hint: Inside the loop, you will need to use d3 to append new
-    // tags for each key-value in the metadata.
-    for (var i = 0; i < meta.length; i++) {
-        var $meta_data = document.createElement("p");
-        $meta_data.innerHTML = meta[i] + ": " + response[meta[i]];
-        $sampleMetadata.appendChild($meta_data)
-    };
-
+    // Use `Object.entries` to add each key and value pair to the panel
+    Object.entries(response).forEach(([key, value]) => {
+      console.log(`${key}: ${value}`);
+        
+      // Inside the loop, use d3 to append new tags for each key-value in the metadata.
+      d3.select("#sample-metadata")
+        .append()
+        .text(`${key}: ${value}`)
+        .append("br")
+      
+    });
 
   });
 
